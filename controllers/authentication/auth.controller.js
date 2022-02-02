@@ -1,9 +1,12 @@
 // import model
-const User = require('../model/user');
+const User = require('../../model/user');
+const Finance = require('../../model/finance');
 
 // import utilities
-const crypt = require('../utils/crypt');
-const tokenGen = require('../utils/tokenGen');
+const crypt = require('../../utils/crypt');
+const tokenGen = require('../../utils/tokenGen');
+
+
 
 // create user
 exports.createUser = async (req, res) => {
@@ -22,6 +25,7 @@ exports.createUser = async (req, res) => {
     lastname: req.body.lastname,
     email: req.body.email,
     phone: req.body.phone,
+    finance : new Finance,
     securityquestion: req.body.securityquestion,
     securityanswer: await crypt.encrypt(req.body.securityanswer),
     password: await crypt.encrypt(req.body.password),
@@ -43,7 +47,7 @@ exports.createUser = async (req, res) => {
 
 
 
-// reset user password
+// reset user password / ask security question
 exports.getSecurityQuestion = async (req, res) => {
     // find user
     const user = await User.findOne({ email: req.body.email });
@@ -115,6 +119,14 @@ exports.updateSecurityDetails = async (req, res) => {
   
 };
 
+exports.getUser = async (req, res) => {
+  const user = await User.find({_id: req.params.id});
+
+  return res.json({
+    user
+  })
+}
+
 // login
 exports.login = async (req, res) => {
 // find user
@@ -158,6 +170,7 @@ exports.login = async (req, res) => {
       });
     });
 };
+
 // logout
 exports.logout = async (req, res) => {
       res.clearCookie("token");

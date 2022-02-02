@@ -31,9 +31,10 @@ let userSchema = new mongoose.Schema({
     type: String,
     required: true,
     },
-    finances: {
+  finance: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'finance',
+        maxlength: 1
   }
 });
 
