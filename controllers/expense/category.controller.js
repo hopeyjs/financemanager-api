@@ -1,3 +1,5 @@
+    const ObjectId = require('mongodb').ObjectID;
+
 // import model
 const User = require("../../model/user");
 const Finance = require("../../model/finance");
@@ -12,10 +14,8 @@ if (!user) {
         error: "No user found."
     })
 }
-// console.log(user.finance)
-// find user's finance and push category into expenses
-const userFinance = Finance.findOne({_id: new ObjectId("61fb0aadac6117ba86981d98")});
-// console.log(userFinance)
+// find user finance array
+const userFinance = await Finance.findOne({_id: user.finance})
 return res.json({
     userFinance
 })
