@@ -31,11 +31,30 @@ let userSchema = new mongoose.Schema({
     type: String,
     required: true,
     },
-  finance: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'finance',
-        maxlength: 1
-  }
+  incomes: [{
+      date: {
+        type: Date,
+      },
+      amount: {
+        type: Number,
+      },
+      source: [
+        {
+          type: String,
+        }
+      ],
+    }],
+  expenses: [{
+      date: {
+        type: String,
+      },
+      amount: {
+        type: Number,
+      },
+      purpose: [{
+          type: String,
+        }],
+    }]
 });
 
 module.exports = mongoose.model("User", userSchema);

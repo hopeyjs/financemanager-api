@@ -3,7 +3,8 @@ const app = express();
 
 // import controllers
 const AuthController = require('./controllers/authentication/auth.controller');
-const ExpenseCategoryController = require('./controllers/expense/category.controller');
+const ExpenseController = require('./controllers/expense/expense.controller');
+const IncomeController = require('./controllers/income/income.controller');
 
 // import middlewares
 
@@ -22,8 +23,12 @@ app.patch('/user/updatesecuritydetails/:id', AuthController.updateSecurityDetail
 app.post('/login', AuthController.login);
 app.post('/logout', AuthController.logout);
 
-// expense Category
-app.post('/user/:id/expense/category', ExpenseCategoryController.createCategory);
-app.get('/finance/:id', ExpenseCategoryController.getUserFinance);
+// expense routes
+app.post('/user/:id/expense', ExpenseController.createExpense);
+app.get('/user/:id/expenses', ExpenseController.getExpenses);
+
+// expense routes
+app.post('/user/:id/income', IncomeController.createIncome);
+app.get('/user/:id/incomes', IncomeController.getIncomes);
 
 module.exports = app

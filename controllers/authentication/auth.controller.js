@@ -1,6 +1,5 @@
 // import model
 const User = require('../../model/user');
-const Finance = require('../../model/finance');
 
 // import utilities
 const crypt = require('../../utils/crypt');
@@ -19,11 +18,6 @@ exports.createUser = async (req, res) => {
         })
     }
 
-    let userFinance;
-    // create finance plan
-  await Finance.create({}).then(finance => {
-    userFinance = finance._id
-  })
 
   // define new user
   const newUser = {
@@ -31,7 +25,6 @@ exports.createUser = async (req, res) => {
     lastname: req.body.lastname,
     email: req.body.email,
     phone: req.body.phone,
-    finance : userFinance,
     securityquestion: req.body.securityquestion,
     securityanswer: await crypt.encrypt(req.body.securityanswer),
     password: await crypt.encrypt(req.body.password),
